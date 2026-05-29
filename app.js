@@ -12,8 +12,6 @@ async function ask() {
   output.textContent = "Thinking...";
 
   try {
-    console.log("Sending request...");
-
     const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -21,7 +19,7 @@ async function ask() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "llama3-8b-8192",
+        model: "llama3-70b-8192",
         messages: [
           {
             role: "system",
@@ -30,10 +28,10 @@ You are BJVE AI.
 
 BJVE SYSTEM:
 - Studio = HTML + CSS UI
-- Fire = Luau game logic
+- Fire = Luau logic
 - UEVTCL = OpenDraw engine commands
 
-Always answer in BJVE style     wiki:https://github.com/jergan-studio/Bjve-documentation/wiki -- use this to find info .
+Always respond using BJVE terms.
 `
           },
           {
@@ -44,14 +42,14 @@ Always answer in BJVE style     wiki:https://github.com/jergan-studio/Bjve-docum
       })
     });
 
-    console.log("Status:", res.status);
-
     const data = await res.json();
-    console.log("Response:", data);
+
+    console.log("STATUS:", res.status);
+    console.log("DATA:", data);
 
     if (!res.ok) {
       output.textContent =
-        "ERROR " + res.status + "\n" +
+        "ERROR " + res.status + "\n\n" +
         JSON.stringify(data, null, 2);
       return;
     }
@@ -61,7 +59,6 @@ Always answer in BJVE style     wiki:https://github.com/jergan-studio/Bjve-docum
       JSON.stringify(data, null, 2);
 
   } catch (err) {
-    console.log("Error:", err);
-    output.textContent = "FAILED: " + err.message;
+    output.textContent = "NETWORK ERROR:\n" + err.message;
   }
 }
