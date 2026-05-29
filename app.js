@@ -27,11 +27,11 @@ async function ask() {
 You are BJVE AI.
 
 BJVE SYSTEM:
-- Studio = HTML + CSS UI
+- Studio = HTML + CSS
 - Fire = Luau logic
-- UEVTCL = OpenDraw engine commands
+- UEVTCL = OpenDraw engine
 
-Always respond using BJVE terms.
+Answer clearly and simply.
 `
           },
           {
@@ -44,9 +44,6 @@ Always respond using BJVE terms.
 
     const data = await res.json();
 
-    console.log("STATUS:", res.status);
-    console.log("DATA:", data);
-
     if (!res.ok) {
       output.textContent =
         "ERROR " + res.status + "\n\n" +
@@ -56,8 +53,7 @@ Always respond using BJVE terms.
 
     output.textContent =
       data.choices?.[0]?.message?.content ||
-      JSON.stringify(data, null, 2);
-
+      "No response";
   } catch (err) {
     output.textContent = "NETWORK ERROR:\n" + err.message;
   }
