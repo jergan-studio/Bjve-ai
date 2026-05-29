@@ -4,9 +4,16 @@ async function ask() {
   const input = document.getElementById("input").value;
   const output = document.getElementById("output");
 
+  if (!input) {
+    output.textContent = "Type something first.";
+    return;
+  }
+
   output.textContent = "Thinking...";
 
   try {
+    console.log("Sending request...");
+
     const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -14,11 +21,20 @@ async function ask() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "llama3-70b-8192",
+        model: "llama3-8b-8192",
         messages: [
           {
             role: "system",
-            content: "You are BJVE AI. Use Studio (HTML/CSS), Fire (Luau), UEVTCL (OpenDraw)."
+            content: `
+You are BJVE AI.
+
+BJVE SYSTEM:
+- Studio = HTML + CSS UI
+- Fire = Luau game logic
+- UEVTCL = OpenDraw engine commands
+
+Always answer in BJVE style     wiki:https://github.com/jergan-studio/Bjve-documentation/wiki -- use this to find info .
+`
           },
           {
             role: "user",
@@ -28,15 +44,24 @@ async function ask() {
       })
     });
 
-    const data = await res.json();
+    console.log("Status:", res.status);
 
-    console.log(data); // IMPORTANT DEBUG
+    const data = await res.json();
+    console.log("Response:", data);
+
+    if (!res.ok) {
+      output.textContent =
+        "ERROR " + res.status + "\n" +
+        JSON.stringify(data, null, 2);
+      return;
+    }
 
     output.textContent =
       data.choices?.[0]?.message?.content ||
       JSON.stringify(data, null, 2);
 
   } catch (err) {
-    output.textContent = "ERROR: " + err.message;
+    console.log("Error:", err);
+    output.textContent = "FAILED: " + err.message;
   }
 }
