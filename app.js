@@ -17,17 +17,7 @@ async function ask() {
       messages: [
         {
           role: "system",
-          content: `
-You are BJVE AI.
-
-BJVE has 3 systems:
-- Studio = HTML + CSS UI
-- Fire = Luau game logic
-- UEVTCL = OpenDraw engine commands
-
-Use BJVE terms when answering.
-If unsure, say "Not found in BJVE docs".
-          `
+          content: "You are BJVE AI. Use BJVE Studio (HTML/CSS), Fire (Luau), UEVTCL (OpenDraw)."
         },
         {
           role: "user",
@@ -41,5 +31,5 @@ If unsure, say "Not found in BJVE docs".
 
   output.textContent =
     data.choices?.[0]?.message?.content ||
-    "No response";
+    JSON.stringify(data, null, 2);
 }
