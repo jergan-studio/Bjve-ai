@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  background: black;
+  color: #00ff88;
+  font-family: Arial;
+}
+
+.app {
+  padding: 20px;
+}
+
+input {
+  width: 70%;
+  padding: 10px;
+}
+
+button {
+  padding: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+pre {
+  margin-top: 20px;
+  white-space: pre-wrap;
+  background: #111;
+  padding: 10px;
+}
