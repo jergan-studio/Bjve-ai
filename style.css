@@ -16,13 +16,12 @@ input {
 
 button {
   padding: 10px;
-  margin-left: 10px;
   cursor: pointer;
 }
 
 pre {
   margin-top: 20px;
-  white-space: pre-wrap;
   background: #111;
   padding: 10px;
+  white-space: pre-wrap;
 }
